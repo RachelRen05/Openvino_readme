@@ -15,7 +15,7 @@ As a minimum list for prerequisites for the build/launching system:
 - Intel® Neural Compute Stick 2
 - Intel® Realsense™ camera D4xx series (e.g. D415, D435, D435i)
 
-Please refer to [this page]() for the detailed info for requested deployment and target platform.
+Please refer to [this page](https://github.com/LewisLiuPub/ros2_openvino_toolkit.doc/blob/master/doc/prerequisite.md) for the detailed info for requested deployment and target platform.
 
 # Design Architecture and Logic Flow
 Please refer to this [guide](https://github.com/RachelRen05/ros2_openvino_toolkit_updated/blob/master/doc/Design_Architecture_and_logic_flow.md) for details.
