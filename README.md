@@ -5,74 +5,84 @@ The OpenVINO™ (Open visual inference and neural network optimization) toolkit 
 * Speeds up time to market via a library of functions and preoptimized kernels
 * Includes optimized calls for OpenCV and OpenVX*
 
+# Prerequist
+As a minimum list for prerequisites for the build/launching system:
+- Intel architecture processor, e.g. 6th~8th generation Intel® Core™
+- Ubuntu 18.04 with ROS2 core packages installed.
+- USB Camera
+
+**Note**: In order to show cases of OpenVINO's capabilities, when launching some of the sample programs, more prerequisites should be met:
+- Intel® Neural Compute Stick 2
+- Intel® Realsense™ camera D4xx series (e.g. D415, D435, D435i)
+
+Please refer to [this page]() for the detailed info for requested deployment and target platform.
+
 # Design Architecture and Logic Flow
 Please refer to this [guide](https://github.com/RachelRen05/ros2_openvino_toolkit_updated/blob/master/doc/Design_Architecture_and_logic_flow.md) for details.
 
 # Supported Features
-## Diversal Input Components
-Currently, the package support several kinds of input resources of gaining image data:
+## Input Resources
+Currently, the package supports RGB frame data from several kinds of input resources:
+- Standard USB Camera
+- Realsense Camera
+- Image Topic
+- Image File
+- Video File
 
-|Input Resource|Description|Subscribed Topic|
-|---|---|---|
-|StandardCamera|Any RGB camera with USB port supporting. Currently only the first USB camera if many are connected.| |
-|RealSenseCamera| Intel RealSense RGB-D Camera,directly calling RealSense Camera via librealsense plugin of openCV.| |
-|Image Topic| any ROS topic which is structured in image message.|```/openvino_toolkit/image_raw```([sensor_msgs::msg::Image](https://github.com/ros2/common_interfaces/blob/master/sensor_msgs/msg/Image.msg))|
-|Image File| Any image file which can be parsed by openCV, such as .png, .jpeg.|
-|Video File| Any video file which can be parsed by openCV.|
+See more from [the input resource description]().
 
 ## Inference Implementations
-Currently, the inference feature list is supported:
+Inferences shown in below list are supported:
+- Face Detection
+- Emotion Recognition
+- Age and Gender Recognition
+- Head Pose Estimation
+- Object Detection
+- Vehicle and License Detection
+- Object Segmentation
+- Person Re-Identification
+- Face Re-Identification
 
-|Inference|Description|Outputs Topic|
-|---|---|---|
-|Face Detection|Object Detection task applied to face recognition using a sequence of neural networks.|```/ros2_openvino_toolkit/face_detection```([object_msgs:msg:ObjectsInBoxes](https://github.com/intel/ros2_object_msgs/blob/master/msg/ObjectsInBoxes.msg))|
-|Emotion Recognition| Emotion recognition based on detected face image.|```/ros2_openvino_toolkit/emotions_recognition```([people_msgs:msg:EmotionsStamped](https://github.com/intel/ros2_openvino_toolkit/blob/master/people_msgs/msg/EmotionsStamped.msg))|
-|Age & Gender Recognition| Age and gener recognition based on detected face image.|```/ros2_openvino_toolkit/age_genders_Recognition```([people_msgs:msg:AgeGenderStamped](https://github.com/intel/ros2_openvino_toolkit/blob/master/people_msgs/msg/AgeGenderStamped.msg))|
-|Head Pose Estimation| Head pose estimation based on detected face image.|```/ros2_openvino_toolkit/headposes_estimation```([people_msgs:msg:HeadPoseStamped](https://github.com/intel/ros2_openvino_toolkit/blob/master/people_msgs/msg/HeadPoseStamped.msg))|
-|Object Detection| object detection based on SSD-based trained models.|```/ros2_openvino_toolkit/detected_objects```([object_msgs::msg::ObjectsInBoxes](https://github.com/intel/ros2_object_msgs/blob/master/msg/ObjectsInBoxes.msg))|
-|Vehicle Detection| Vehicle detection based on Intel models.|```/ros2_openvino_toolkit/detected_vehicles_attribs```([people_msgs::msg::VehicleAttribsStamped](https://github.com/intel/ros2_openvino_toolkit/blob/devel/people_msgs/msg/VehicleAttribsStamped.msg))|
-|License Detection| License detection based on Intel models.|```/ros2_openvino_toolkit/detected_license_plates```([people_msgs::msg::LicensePlateStamped](https://github.com/intel/ros2_openvino_toolkit/blob/devel/people_msgs/msg/LicensePlateStamped.msg))|
-|Object Segmentation| object detection and segmentation.|```/ros2_openvino_toolkit/segmented_obejcts```([people_msgs::msg::ObjectsInMasks](https://github.com/intel/ros2_openvino_toolkit/blob/devel/people_msgs/msg/ObjectsInMasks.msg))|
-|Person Reidentification| Person Reidentification based on object detection.|```/ros2_openvino_toolkit/reidentified_persons```([people_msgs::msg::ReidentificationStamped](https://github.com/intel/ros2_openvino_toolkit/blob/devel/people_msgs/msg/ReidentificationStamped.msg))|
+## Output Types
+The inference results can be output in several types. One or more types can be enabled for any infernece pipeline:
+- **Topic Publishing**: Specific topic(s) can be generated and published according to the given inference functionalities. See the [topic-inference matching table]().
+- **Image View Window**: The original image and the inference results are rendered together and shown in a CV window.
+- **RViz Showing**: The Rendered image (rendering inference results into the original image) was transformed into sensor_msgs::msg::Image topic, that can be shown in RViz application.
 
-## ROS interfaces and outputs
-**Note**:In addition to topic output interface,there are three other output interfaces.
-### Service
-- Object Detection Service:
+## Service
+Several ROS2 Services are created, expecting to be used in client/server mode, especially when synchronously getting inference results for a given image frame or when managing inference pipeline's lifecycle.
+- **Face Detection or Object Detection for a given Image file**
+   - Object Detection Service:
 ```/detect_object``` ([object_msgs::srv::DetectObject](https://github.com/intel/ros2_object_msgs/blob/master/srv/DetectObject.srv))
-- Face Detection Service:
+   - Face Detection Service:
 ```/detect_face``` ([object_msgs::srv::DetectObject](https://github.com/intel/ros2_object_msgs/blob/master/srv/DetectObject.srv))
-- Age & Gender Detection Service:
-```/detect_age_gender``` ([people_msgs::srv::AgeGender](https://github.com/intel/ros2_openvino_toolkit/blob/devel/people_msgs/srv/AgeGender.srv))
-- Headpose Detection Service:
+   - Age & Gender Detection Service:
+```/detect_age_gender``` ([people_msgs::srv::AgeGender](https://github.com/intel/   ros2_openvino_toolkit/blob/devel/people_msgs/srv/AgeGender.srv))
+   - Headpose Detection Service:
 ```/detect_head_pose``` ([people_msgs::srv::HeadPose](https://github.com/intel/ros2_openvino_toolkit/blob/devel/people_msgs/srv/HeadPose.srv))
-- Emotion Detection Service:
+   - Emotion Detection Service:
 ```/detect_emotion``` ([people_msgs::srv::Emotion](https://github.com/intel/ros2_openvino_toolkit/blob/devel/people_msgs/srv/Emotion.srv))
+- **Inference Pipeline Lifecycle Management**
+   - Create new pipeline
+   - Start/Stop/Pause a pipeline
+   - Get pipeline list or status
+# Installation
 
-### RViz
-RViz dispaly is also supported by the composited topic of original image frame with inference result.
-To show in RViz tool, add an image marker with the composited topic:
-```/ros2_openvino_toolkit/image_rviz```([sensor_msgs::msg::Image](https://github.com/ros2/common_interfaces/blob/master/sensor_msgs/msg/Image.msg))
+**NOTE:** Intel releases 2 different series of OpenVINO Toolkit, we call them as [OpenSource Version](https://github.com/opencv/dldt/) and [Binary Version](https://software.intel.com/en-us/openvino-toolkit). You may choose any of them to install.
 
-### Image Window
-OpenCV based image window is natively supported by the package.
-To enable window, Image Window output should be added into the output choices in .yaml config file. see [the config file guidance](https://github.com/intel/ros2_openvino_toolkit/blob/devel/doc/YAML_CONFIGURATION_GUIDE.md) for checking/adding this feature in your launching.
+**NOTE:** If you are not sure which version you would use, it is recommended for you to choose Binary Version, which can simplify your environment setup.
 
-# Installation & Launching
-**NOTE:** Intel releases 2 different series of OpenVINO Toolkit, we call them as [OpenSource Version](https://github.com/opencv/dldt/) and [Binary Version](https://software.intel.com/en-us/openvino-toolkit). 
-
-## Dependencies Installation
 ### OpenSource Version
 One-step installation scripts are provided for the dependencies' installation. Please see [the guide](https://github.com/intel/ros2_openvino_toolkit/blob/devel/doc/OPEN_SOURCE_CODE_README.md) for details.
 
 ### Binary Version
 One-step installation scripts are provided for the dependencies' installation. Please see [the guide](https://github.com/RachelRen05/ros2_openvino_toolkit_updated/blob/master/doc/binary_version/BINARY_INSTALLATION.md) for details.
 
-## Launching
-### set environment
+# Launching
+### Setup Environment
 Please refer to this [guide](https://github.com/RachelRen05/ros2_openvino_toolkit_updated/blob/master/doc/SET_ENVIRONMENT.md) for details.
-### Preparation
-* Configure the Neural Compute Stick USB Driver
+
+**NOTE:** Configure *once* the Neural Compute Stick USB Driver by following between instructions, in case you have a NCS or NCS2 in hand. 
    ```bash
    cd ~/Downloads
    SUBSYSTEM=="usb", ATTRS{idProduct}=="2150", ATTRS{idVendor}=="03e7", GROUP="users", MODE="0666",   ENV{ID_MM_DEVICE_IGNORE}="1"
@@ -85,13 +95,28 @@ Please refer to this [guide](https://github.com/RachelRen05/ros2_openvino_toolki
    sudo ldconfig
    rm 97-usbboot.rules
    ```
-* [face detection](https://github.com/RachelRen05/ros2_openvino_toolkit_updated/blob/master/doc/openSource_version/SOURCE_FACE_DETECTION.md)
-* [object detection](https://github.com/RachelRen05/ros2_openvino_toolkit_updated/blob/master/doc/openSource_version/SOURCE_OBJECT_DETECTION.md)
-* [object segmentation](https://github.com/RachelRen05/ros2_openvino_toolkit_updated/blob/master/doc/openSource_version/SOURCE_OBJECT_SEGMENTATION.md)
-* [person reidentification](https://github.com/RachelRen05/ros2_openvino_toolkit_updated/blob/master/doc/openSource_version/SOURCE_PEOPLE_REIDENTIFICATION.md)
-* [vehicle detection](https://github.com/RachelRen05/ros2_openvino_toolkit_updated/blob/master/doc/openSource_version/SOURCE_VEHICLE_DETECTION.md)
-* [service](https://github.com/RachelRen05/ros2_openvino_toolkit_updated/blob/master/doc/openSource_version/SOURCE_SERVICE.md)
+## Launching Programs
+Each inference listed in [section Inference Implementations]() is created default launching configurations( xxx.launch.py) in OpenVINO Sample package. You can follow the utility of ROS2 launch instruction to launch them. For example:
+   ```bash
+   ros2 launch dynamic_vino_sample pipeline_object.launch.py
+   ```
 
+The full list of xxx.launch.py is shown in below tabel:
+
+|Launch File|Description|
+|-----------------------|----|
+|pipeline_object.launch.py|Launching file for **Object Detection**, by default mobilenet_ssd model and standard USB camera are used.|
+|pipeline_people.launch.py|Launching file for **Face Detection**, also including **Age/Gender Recognition, HeadPose Estimation, and Emotion Recognition**.|
+|pipeline_segmentation.launch.py|Launching file for **Object Segmentation**.| 
+|pipeline_person_reid.launch.py|Launching file for **Person Re-Identification**.| 
+|pipeline_face_reid.launch.py|Launching file for **Face Segmentation**, in which **Face Landmark Detection** is included.| 
+
+# Get Started
+Please refer to [this page]() for detailed steps for code/dependency download, build, and simple demo application launching.
+
+# Tutorials
+- [How to configure a inference pipeline?]()
+- [How to create multiple pipelines in a process?]()
 # TODO Features
 * Support **result filtering** for inference process, so that the inference results can be filtered to different subsidiary inference. For example, given an image, firstly we do Object Detection on it, secondly we pass cars to vehicle brand recognition and pass license plate to license number recognition.
 * Design **resource manager** to better use such resources as models, engines, and other external plugins.
