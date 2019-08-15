@@ -26,16 +26,17 @@ One of the key added values of ROS2 OpenVINO is automatically create new pipelin
 
 In this sample, a pipeline is to be created with this topology:
 
-input=>operation: RealSenseCamera
-infer=>operaton: ObjectDetection
-output1=>operation: ImageWindow
-output2=>operation: RosTopic
-output3=>operation: RViz
+```flow
+input=operation: RealSenseCamera
+infer=operation: ObjectDetection
+output1=operation: ImageWindow
+output2=operation: RosTopic
+output3=operation: RViz
 
-input->infer->output1
-infer->output2
-infer->output3
-
+input-infer-output1
+infer-output2
+infer-output3
+```
 
 Detail Description for each line shows in below tabel:
 
