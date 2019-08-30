@@ -1,1 +1,0 @@
-In most cases, Age-and-gender recognition is not used individually, please see section [Face Detection]() for how to use it in face detection scenarios.
