@@ -1,4 +1,5 @@
-# Overview
+# Object Detection
+## Overview
 The section depict the kind of Object Detection, which produces object classification and its location based ROI. 
 Two kinds of models are supported currently:
 - SSD based Object Detection Models
@@ -6,38 +7,171 @@ Two kinds of models are supported currently:
 - YoloV2
 
 ## Demo Result Snapshots
-See below pictures for the demo result snapshots.
 * object detection input from realsense camera
 
 ![object_detection_demo_realsense](https://github.com/intel/ros2_openvino_toolkit/blob/devel/data/images/object_detection.gif "object detection demo realsense")
 
-# Preparation
-Before using the supported models, you need to first downloand and optimize them into OpenVINO mode.
+## Download Models
+Before using the supported models, you need to first downloand and optimize them into OpenVINO mode.</br>
 **NOTE**: mobilenet-SSD caffe model is the default one used in the Object Detection configuration. 
 
-## Mobilenet-SSD (Caffe) model
-1. Download
-2. Optimize
-3. Install
-## Mobilenet-SSD (Tensorflow) model
-1. Download
-2. Optimize
-3. Install
-## YoloV2 model
-1. Download
-2. Optimize
-3. Install
-## SSD300-VGG16 model
-1. Download
-2. Optimize
-3. Install
-# Launching Steps
+### OpenSource Version
+#### mobilenet-ssd
+* download and convert a trained model to produce an optimized Intermediate Representation (IR) of the model 
+  ```bash
+  cd /opt/openvino_toolkit/open_model_zoo/model_downloader
+  python3 ./downloader.py --name mobilenet-ssd
+  #FP32 precision model
+  sudo python3 /opt/openvino_toolkit/dldt/model-optimizer/mo.py --input_model /opt/openvino_toolkit/open_model_zoo/model_downloader/object_detection/common/mobilenet-ssd/caffe/mobilenet-ssd.caffemodel --output_dir /opt/openvino_toolkit/models/object_detection/mobilenet-ssd/caffe/output/FP32 --mean_values [127.5,127.5,127.5] --scale_values [127.5]
+  #FP16 precision model
+  sudo python3 /opt/openvino_toolkit/dldt/model-optimizer/mo.py --input_model /opt/openvino_toolkit/open_model_zoo/model_downloader/object_detection/common/mobilenet-ssd/caffe/mobilenet-ssd.caffemodel --output_dir /opt/openvino_toolkit/models/object_detection/mobilenet-ssd/caffe/output/FP16 --data_type=FP16 --mean_values [127.5,127.5,127.5] --scale_values [127.5]
+  ```
+* copy label files (excute _once_)<br>
+  ```bash
+  sudo cp /opt/openvino_toolkit/ros2_openvino_toolkit/data/labels/object_detection/mobilenet-ssd.labels /opt/openvino_toolkit/models/object_detection/mobilenet-ssd/caffe/output/FP32
+  sudo cp /opt/openvino_toolkit/ros2_openvino_toolkit/data/labels/object_detection/mobilenet-ssd.labels /opt/openvino_toolkit/models/object_detection/mobilenet-ssd/caffe/output/FP16
+  ```
+#### YOLOv2-voc
+* Darkflow to protobuf(.pb)
+  - install [darkflow](https://github.com/thtrieu/darkflow)
+    - install prerequsites
+    ```bash
+    pip3 install tensorflow opencv-python numpy networkx cython
+    ```
+    - Get darkflow and YOLO-OpenVINO
+    ```bash
+    mkdir -p ~/code && cd ~/code
+    git clone https://github.com/thtrieu/darkflow
+    git clone https://github.com/chaoli2/YOLO-OpenVINO
+    sudo ln -sf ~/code/darkflow /opt/openvino_toolkit/
+    ```
+    - modify the line self.offset = 16 in the ./darkflow/utils/loader.py file and replace with self.offset = 20
+    - Install darkflow
+    ```bash
+    cd ~/code/darkflow
+    pip3 install .
+    ```
+  - Copy voc.names in YOLO-OpenVINO/common to labels.txt in darkflow.
+    ```bash
+    cp ~/code/YOLO-OpenVINO/common/voc.names ~/code/darkflow/labels.txt
+    ```
+  - Get yolov2 weights and cfg
+    ```bash
+    cd ~/code/darkflow
+    mkdir -p models
+    cd models
+    wget -c https://pjreddie.com/media/files/yolov2-voc.weights
+    wget https://raw.githubusercontent.com/pjreddie/darknet/master/cfg/yolov2-voc.cfg
+    ```
+  - Run convert script
+    ```bash
+    cd ~/code/darkflow
+    flow --model models/yolov2-voc.cfg --load models/yolov2-voc.weights --savepb
+    ```
+* Convert YOLOv2-voc TensorFlow Model to the optimized Intermediate Representation (IR) of model
+  ```bash
+  cd ~/code/darkflow
+  # FP32 precision model
+  sudo python3 /opt/openvino_toolkit/dldt/model-optimizer/mo_tf.py \
+  --input_model built_graph/yolov2-voc.pb \
+  --batch 1 \
+  --tensorflow_use_custom_operations_config /opt/openvino_toolkit/dldt/model-optimizer/extensions/front/tf/yolo_v1_v2.json \
+  --data_type FP32 \
+  --output_dir /opt/openvino_toolkit/models/object_detection/YOLOv2-voc/tf/output/FP32
+  # FP16 precision model
+  sudo python3 /opt/openvino_toolkit/dldt/model-optimizer/mo_tf.py \
+  --input_model built_graph/yolov2-voc.pb \
+  --batch 1 \
+  --tensorflow_use_custom_operations_config /opt/openvino_toolkit/dldt/model-optimizer/extensions/front/tf/yolo_v1_v2.json \
+  --data_type FP16 \
+  --output_dir /opt/openvino_toolkit/models/object_detection/YOLOv2-voc/tf/output/FP16
+  ```
+* copy label files (excute _once_)<br>
+  ```bash
+  sudo cp /opt/openvino_toolkit/ros2_openvino_toolkit/data/labels/object_detection/yolov2-voc.labels /opt/openvino_toolkit/models/object_detection/YOLOv2-voc/tf/output/FP32  
+  sudo cp /opt/openvino_toolkit/ros2_openvino_toolkit/data/labels/object_detection/yolov2-voc.labels /opt/openvino_toolkit/models/object_detection/YOLOv2-voc/tf/output/FP16
+  ```
+### Binary Version
+#### mobilenet-ssd
+* download and convert a trained model to produce an optimized Intermediate Representation (IR) of the model 
+  ```bash
+  cd /opt/intel/openvino/deployment_tools/tools/model_downloader
+  sudo python3 ./downloader.py --name mobilenet-ssd
+  #FP32 precision model
+  sudo python3 /opt/intel/openvino/deployment_tools/model_optimizer/mo.py --input_model /opt/intel/openvino/deployment_tools/tools/model_downloader/object_detection/common/mobilenet-ssd/caffe/mobilenet-ssd.caffemodel --output_dir /opt/openvino_toolkit/models/object_detection/mobilenet-ssd/caffe/output/FP32 --mean_values [127.5,127.5,127.5] --scale_values [127.5]
+  #FP16 precision model
+  sudo python3 /opt/intel/openvino/deployment_tools/model_optimizer/mo.py --input_model /opt/intel/openvino/deployment_tools/tools/model_downloader/object_detection/common/mobilenet-ssd/caffe/mobilenet-ssd.caffemodel --output_dir /opt/openvino_toolkit/models/object_detection/mobilenet-ssd/caffe/output/FP16 --data_type=FP16 --mean_values [127.5,127.5,127.5] --scale_values [127.5]
+  ```
+* copy label files (excute _once_)<br>
+  ```bash
+  sudo cp /opt/openvino_toolkit/ros2_openvino_toolkit/data/labels/object_detection/mobilenet-ssd.labels /opt/openvino_toolkit/models/object_detection/mobilenet-ssd/caffe/output/FP32
+  sudo cp /opt/openvino_toolkit/ros2_openvino_toolkit/data/labels/object_detection/mobilenet-ssd.labels /opt/openvino_toolkit/models/object_detection/mobilenet-ssd/caffe/output/FP16
+  ```
 
-# Advanced Configuration
-
+  #### YOLOv2-voc
+* Darkflow to protobuf(.pb)
+  - install [darkflow](https://github.com/thtrieu/darkflow)
+    - install prerequsites
+    ```bash
+    pip3 install tensorflow opencv-python numpy networkx cython
+    ```
+    - Get darkflow and YOLO-OpenVINO
+    ```bash
+    mkdir -p ~/code && cd ~/code
+    git clone https://github.com/thtrieu/darkflow
+    git clone https://github.com/chaoli2/YOLO-OpenVINO
+    sudo ln -sf ~/code/darkflow /opt/openvino_toolkit/
+    ```
+    - modify the line self.offset = 16 in the ./darkflow/utils/loader.py file and replace with self.offset = 20
+    - Install darkflow
+    ```bash
+    cd ~/code/darkflow
+    pip3 install .
+    ```
+  - Copy voc.names in YOLO-OpenVINO/common to labels.txt in darkflow.
+    ```bash
+    cp ~/code/YOLO-OpenVINO/common/voc.names ~/code/darkflow/labels.txt
+    ```
+  - Get yolov2 weights and cfg
+    ```bash
+    cd ~/code/darkflow
+    mkdir -p models
+    cd models
+    wget -c https://pjreddie.com/media/files/yolov2-voc.weights
+    wget https://raw.githubusercontent.com/pjreddie/darknet/master/cfg/yolov2-voc.cfg
+    ```
+  - Run convert script
+    ```bash
+    cd ~/code/darkflow
+    flow --model models/yolov2-voc.cfg --load models/yolov2-voc.weights --savepb
+    ```
+* Convert YOLOv2-voc TensorFlow Model to the optimized Intermediate Representation (IR) of model
+  ```bash
+  cd ~/code/darkflow
+  # FP32 precision model
+  sudo python3 /opt/intel/openvino/deployment_tools/model_optimizer/mo_tf.py \
+  --input_model built_graph/yolov2-voc.pb \
+  --batch 1 \
+  --tensorflow_use_custom_operations_config /opt/intel/openvino/deployment_tools/model_optimizer/extensions/front/tf/yolo_v1_v2.json \
+  --data_type FP32 \
+  --output_dir /opt/openvino_toolkit/models/object_detection/YOLOv2-voc/tf/output/FP32
+  # FP16 precision model
+  sudo python3 /opt/intel/openvino/deployment_tools/model_optimizer/mo_tf.py \
+  --input_model built_graph/yolov2-voc.pb \
+  --batch 1 \
+  --tensorflow_use_custom_operations_config /opt/intel/openvino/deployment_tools/model_optimizer/extensions/front/tf/yolo_v1_v2.json \
+  --data_type FP16 \
+  --output_dir /opt/openvino_toolkit/models/object_detection/YOLOv2-voc/tf/output/FP16
+  ```
+* copy label files (excute _once_)<br>
+  ```bash
+  sudo cp /opt/openvino_toolkit/ros2_openvino_toolkit/data/labels/object_detection/yolov2-voc.labels /opt/openvino_toolkit/models/object_detection/YOLOv2-voc/tf/output/FP32
+  sudo cp /opt/openvino_toolkit/ros2_openvino_toolkit/data/labels/object_detection/yolov2-voc.labels /opt/openvino_toolkit/models/object_detection/YOLOv2-voc/tf/output/FP16
+  ```
+## Advanced Configuration
 Binding constraint for some configurations:
 
 |Model Location|FP|Engine|Batch Size|
 |---|---|---|---|
-|/path/to/mobilenet-fp16.xml|16|MYRIAD<br>GPU|1|
-|/path/to/mobilenet-fp32.xml|32|CPU<br>GPU|1|
+|mobilenet-fp16.xml|16|MYRIAD<br>GPU|1|
+|mobilenet-fp32.xml|32|CPU<br>GPU|1|
