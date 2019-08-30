@@ -14,19 +14,15 @@ The OpenVINO™ (Open visual inference and neural network optimization) toolkit 
 * Tutorials
   - [How to configure a inference pipeline?](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/tutorials/configuration_file_customization.md)
   - [How to create multiple pipelines in a process?]()
+  - [Quick Getting Started](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/Getting_Started.md)
 
-# Installation
+## Installation
 See [Installation Page]() for detailed installation instructions.
 
-# Launching
+## Launching
 See [Launching Page]() for detailed launching instructions.
 
-# Get Started
-Please refer to [this page]() for detailed steps for code/dependency download, build, and simple demo application launching.
 
-# Tutorials
-- [How to configure a inference pipeline?]()
-- [How to create multiple pipelines in a process?]()
 # TODO Features
 * Support **result filtering** for inference process, so that the inference results can be filtered to different subsidiary inference. For example, given an image, firstly we do Object Detection on it, secondly we pass cars to vehicle brand recognition and pass license plate to license number recognition.
 * Design **resource manager** to better use such resources as models, engines, and other external plugins.
