@@ -1,20 +1,5 @@
 # ros2_openvino_toolkit
-
-## 1. Introduction
-The [OpenVINO™](https://software.intel.com/en-us/openvino-toolkit) toolkit quickly deploys applications and solutions that emulate human vision. Based on Convolutional Neural Networks (CNN), the Toolkit extends computer vision (CV) workloads across Intel® hardware, maximizing performance.
-
-This project is a ROS2 wrapper for CV API of [OpenVINO™](https://software.intel.com/en-us/openvino-toolkit), providing the following features:
-* Support CPU, GPU and Intel® Neural Compute Stick 2 platforms
-* Support standard USB camera and Intel® RealSense™ camera
-* Support Video or Image file as detection source
-* Face detection
-* Emotion recognition
-* Age and gender recognition
-* Head pose recognition
-* Object detection
-* Demo application to show above detection and recognitions
-
-## 2. Prerequisite
+## 1. Prerequisite
 - An x86_64 computer running Ubuntu 18.04. Below processors are supported:
 	* 6th-8th Generation Intel® Core™
 	* Intel® Xeon® v5 family
@@ -32,7 +17,7 @@ This project is a ROS2 wrapper for CV API of [OpenVINO™](https://software.inte
 	* Ubuntu system: Menu [System Settings] --> [Details] may help you find the graphics information.
 	* Openvino: Download the install package, install_GUI.sh inside will check the GPU information before installation.
 
-## 3. Environment Setup
+## 2. Environment Setup
 **Note**:You can choose to build the environment using *./environment_setup_binary.sh* script in the script subfolder.The *modules.conf* file in the same directory as the .sh file is the configuration file that controls the installation process.You can modify the *modules.conf* to customize your installation process.
 ```bash
 ./environment_setup_binary.sh
@@ -89,7 +74,7 @@ This project is a ROS2 wrapper for CV API of [OpenVINO™](https://software.inte
 	cd /usr/lib/x86_64-linux-gnu
 	sudo ln -sf libboost_python-py35.so libboost_python3.so
 	```
-## 4. Building and Installation
+## 3. Building and Installation
 * Build sample code under openvino toolkit
 	```bash
 	# root is required instead of sudo
