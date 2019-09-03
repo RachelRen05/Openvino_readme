@@ -11,7 +11,7 @@
 #### Object Detection Service
 * See [object detection download model](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/inferences/Object_Detection.md#mobilenet-ssd-1) section for detailed instructions.
 
-### People Detection Service
+#### People Detection Service
 * See [People Detection download model](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/inferences/Face_Detection.md#opensource-version) section for detaild instructions.
 
 ## Launching
