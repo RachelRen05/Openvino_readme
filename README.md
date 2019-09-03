@@ -17,10 +17,10 @@ The OpenVINO™ (Open visual inference and neural network optimization) toolkit 
   - [Quick Getting Started](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/Getting_Started.md)
 
 ## Installation
-See [Installation Page]() for detailed installation instructions.
+See [Installation Page](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/installation.md) for detailed installation instructions.
 
 ## Launching
-See [Launching Page]() for detailed launching instructions.
+See [Launching Page](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/launch.md) for detailed launching instructions.
 
 
 # TODO Features
