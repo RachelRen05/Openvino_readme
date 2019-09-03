@@ -1,5 +1,5 @@
 # Output Types
->> The inference results can be output in several types. One or more types can be enabled for any infernece pipeline.
+>> The inference results can be output in several types. One or more types can be enabled for any inference pipeline.
 ## Topic Publishing
 >> Specific topic(s) can be generated and published according to the given inference functionalities.</br>
 
@@ -30,11 +30,11 @@
 
 |Inference|Service|
 |---|---|
-|Object Detection Service|```/detect_object``` ([object_msgs::srv::DetectObject](https://github.com/intel/ros2_object_msgs/blob/master/srv/DetectObject.srv))|
-|Face Detection Service|```/detect_face``` ([object_msgs::srv::DetectObject](https://github.com/intel/ros2_object_msgs/blob/master/srv/DetectObject.srv))|
-|Age & Gender Detection Service|```/detect_age_gender``` ([people_msgs::srv::AgeGender](https://github.com/intel/   ros2_openvino_toolkit/blob/devel/people_msgs/srv/AgeGender.srv))|
-|Headpose Detection Service|```/detect_head_pose``` ([people_msgs::srv::HeadPose](https://github.com/intel/ros2_openvino_toolkit/blob/devel/people_msgs/srv/HeadPose.srv))|
-|Emotion Detection Service|```/detect_emotion``` ([people_msgs::srv::Emotion](https://github.com/intel/ros2_openvino_toolkit/blob/devel/people_msgs/srv/Emotion.srv))|
+|Object Detection Service|```/detect_object```([object_msgs::srv::DetectObject](https://github.com/intel/ros2_object_msgs/blob/master/srv/DetectObject.srv))|
+|Face Detection Service|```/detect_face```([object_msgs::srv::DetectObject](https://github.com/intel/ros2_object_msgs/blob/master/srv/DetectObject.srv))|
+|Age Gender Detection Service|```/detect_age_gender```([people_msgs::srv::AgeGender](https://github.com/intel/ros2_openvino_toolkit/blob/devel/people_msgs/srv/AgeGender.srv))|
+|Headpose Detection Service|```/detect_head_pose```([people_msgs::srv::HeadPose](https://github.com/intel/ros2_openvino_toolkit/blob/devel/people_msgs/srv/HeadPose.srv))|
+|Emotion Detection Service|```/detect_emotion```([people_msgs::srv::Emotion](https://github.com/intel/ros2_openvino_toolkit/blob/devel/people_msgs/srv/Emotion.srv))|
 
 - **Inference Pipeline Lifecycle Management**
    - Create new pipeline
