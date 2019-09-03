@@ -4,7 +4,7 @@
 See below pictures for the demo result snapshots.
 * face detection input from image
 ![face_detection_demo_image](https://github.com/intel/ros2_openvino_toolkit/blob/devel/data/images/face_detection.png "face detection demo image")
-## Launching
+## Download Models
 ### OpenSource Version
 * download the optimized Intermediate Representation (IR) of model (excute _once_)<br>
 	```bash
