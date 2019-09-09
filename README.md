@@ -8,19 +8,19 @@ The OpenVINO™ (Open visual inference and neural network optimization) toolkit 
 * Includes optimized calls for OpenCV and OpenVX*
 
 ## Tables of contents
-* [Prerequist](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/prerequisite.md)
-* [Design Architecture and Logic Flow](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/Design_Architecture_and_logic_flow.md)
-* [Supported Features](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/Supported_features.md)
+* [Prerequist](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/tables_of_contents/prerequisite.md)
+* [Design Architecture and Logic Flow](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/tables_of_contents/Design_Architecture_and_logic_flow.md)
+* [Supported Features](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/tables_of_contents/supported_features/Supported_features.md)
 * Tutorials
-  - [How to configure a inference pipeline?](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/tutorials/configuration_file_customization.md)
+  - [How to configure a inference pipeline?](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/tables_of_contents/tutorials/configuration_file_customization.md)
   - [How to create multiple pipelines in a process?]()
-  - [Quick Getting Started](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/Getting_Started.md)
+  - [Quick Getting Started](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/tables_of_contents/tutorials/Getting_Started.md)
 
 ## Installation
-See [Installation Page](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/installation.md) for detailed installation instructions.
+See [Installation Page](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/installation/installation.md) for detailed installation instructions.
 
 ## Launching
-See [Launching Page](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/launch.md) for detailed launching instructions.
+See [Launching Page](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/launching/launch.md) for detailed launching instructions.
 
 
 # TODO Features
