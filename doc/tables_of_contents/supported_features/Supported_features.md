@@ -21,7 +21,7 @@ Inferences shown in below list are supported:
 - Person Re-Identification
 - Face Re-Identification
 
-[Inference functionality overview](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/tables_of_contents/inference_functionality_overview.md).
+[Inference functionality overview](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/tables_of_contents/supported_features/inference_functionality_overview.md).
 
 ## Output Types
 The inference results can be output in several types. One or more types can be enabled for any infernece pipeline:
