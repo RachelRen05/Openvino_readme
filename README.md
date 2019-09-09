@@ -13,7 +13,7 @@ The OpenVINO™ (Open visual inference and neural network optimization) toolkit 
 * [Supported Features](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/tables_of_contents/supported_features/Supported_features.md)
 * Tutorials
   - [How to configure a inference pipeline?](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/tables_of_contents/tutorials/configuration_file_customization.md)
-  - [How to create multiple pipelines in a process?]()
+  - [How to create multiple pipelines in a process?](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/tables_of_contents/tutorials/Multiple_Pipelines.md)
   - [Quick Getting Started](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/tables_of_contents/tutorials/Getting_Started.md)
 
 ## Installation
