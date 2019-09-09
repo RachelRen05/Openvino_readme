@@ -1,6 +1,6 @@
 # Development and Target Platform
 
-The development and target platforms have the same requirements, but you can select different components during the installation, based on your intended use.
+>> The development and target platforms have the same requirements, but you can select different components during the installation, based on your intended use.
 
 ## Hardware
 ### Processor Supported:
