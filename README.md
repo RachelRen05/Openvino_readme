@@ -8,7 +8,7 @@ The OpenVINO™ (Open visual inference and neural network optimization) toolkit 
 * Includes optimized calls for OpenCV and OpenVX*
 
 ## Tables of contents
-* [Prerequist](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/tables_of_contents/prerequisite.md)
+* [prerequisite](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/tables_of_contents/prerequisite.md)
 * [Design Architecture and Logic Flow](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/tables_of_contents/Design_Architecture_and_logic_flow.md)
 * [Supported Features](https://github.com/RachelRen05/Openvino_readme/blob/master/doc/tables_of_contents/supported_features/Supported_features.md)
 * Tutorials
