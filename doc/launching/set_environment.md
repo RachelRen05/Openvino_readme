@@ -12,6 +12,8 @@
   ```
 * Set model tool variable
   ```bash
+  #TBD
+  cd path
   ./set_variable.sh
   ```
 ## Binary Version
@@ -28,5 +30,7 @@
   ```
 * Set model tool variable
   ```bash
+  #TBD
+  cd path
   ./set_variable.sh
   ```
