@@ -14,7 +14,7 @@
   ```bash
   #TBD
   cd path
-  ./set_variable.sh
+  source set_variable.sh
   ```
 ## Binary Version
 * Set ENV LD_LIBRARY_PATH and openvino_version
@@ -32,5 +32,5 @@
   ```bash
   #TBD
   cd path
-  ./set_variable.sh
+  source set_variable.sh
   ```
