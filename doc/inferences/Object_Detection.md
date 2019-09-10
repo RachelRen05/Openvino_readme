@@ -18,7 +18,7 @@ Two kinds of models are supported currently:
 * download and convert a trained model to produce an optimized Intermediate Representation (IR) of the model 
   ```bash
   cd $model_downloader
-  python3 ./downloader.py --name mobilenet-ssd
+  sudo python3 ./downloader.py --name mobilenet-ssd
   #FP32 precision model
   sudo python3 $model_optimizer/mo.py --input_model $model_downloader/object_detection/common/mobilenet-ssd/caffe/mobilenet-ssd.caffemodel --output_dir /opt/openvino_toolkit/models/object_detection/mobilenet-ssd/caffe/output/FP32 --mean_values [127.5,127.5,127.5] --scale_values [127.5]
   #FP16 precision model
