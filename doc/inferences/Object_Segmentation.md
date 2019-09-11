@@ -12,7 +12,7 @@ See below pictures for the demo result snapshots.
   wget http://download.tensorflow.org/models/object_detection/mask_rcnn_inception_v2_coco_2018_01_28.tar.gz
   tar -zxvf mask_rcnn_inception_v2_coco_2018_01_28.tar.gz
   cd mask_rcnn_inception_v2_coco_2018_01_28
-  sudo python3 $model_downloader/mo_tf.py --input_model frozen_inference_graph.pb --tensorflow_use_custom_operations_config $model_optimizer/extensions/front/tf/mask_rcnn_support.json --tensorflow_object_detection_api_pipeline_config pipeline.config --reverse_input_channels --output_dir /opt/openvino_toolkit/models/segmentation/output/FP32
+  sudo python3 $model_optimizer/mo_tf.py --input_model frozen_inference_graph.pb --tensorflow_use_custom_operations_config $model_optimizer/extensions/front/tf/mask_rcnn_support.json --tensorflow_object_detection_api_pipeline_config pipeline.config --reverse_input_channels --output_dir /opt/openvino_toolkit/models/segmentation/output/FP32
   ```
 * copy label files (excute _once_)<br>
 	```bash
