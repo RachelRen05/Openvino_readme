@@ -132,6 +132,7 @@
 	git clone https://github.com/ros-perception/vision_opencv -b ros2
 	git clone https://github.com/ros2/message_filters.git
 	git clone https://github.com/ros-perception/image_common.git -b ros2
+	git clone https://github.com/ros2/pcl_conversions.git -b ros2
 	git clone https://github.com/intel/ros2_intel_realsense.git -b refactor
 	```
 
